@@ -57,3 +57,19 @@ systemctl enable httpd
 systemctl start httpd
 
 echo "<html><body><h1>Healthy</h1></body></html>" > /var/www/html/health.html
+
+
+
+
+
+🔍 O Problema
+Ao finalizar o deploy, as instâncias permaneciam em estado Unhealthy no Target Group, e o Application Load Balancer (ALB) retornava erro de timeout.
+
+🛠️ Causa Raiz e Resolução
+O problema estava na configuração dos Security Groups (SG). O SG das instâncias WordPress não permitia o tráfego de entrada (Inbound) vindo do SG do Load Balancer na porta 80.
+
+Ação: Corrigi a regra de entrada para aceitar tráfego apenas do Source ID do Security Group do ALB, garantindo segurança e conectividade.
+
+
+<img width="505" height="214" alt="SORTE" src="https://github.com/user-attachments/assets/825347ef-bac9-4a29-8c0d-e704a8aaff9d" />
+
